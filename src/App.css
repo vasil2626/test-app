@@ -1,38 +1,142 @@
-.App {
-  text-align: center;
+li {
+  list-style: none;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Todo {
+  width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.input_wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 20px;
+
 }
 
-.App-link {
-  color: #61dafb;
+.input_field {}
+
+.Add_button {
+  width: 90px;
+  margin-left: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input {
+  width: 500px;
+  height: 30px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #dcdada;
+}
+
+.todo_wrapper {
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.todo_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: grey;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.todo_item span {
+  color: aliceblue;
+}
+
+.item_buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.popup {
+  position: absolute;
+  width: 100%;
+  background-color: gray;
+  opacity: 0.7;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.popup-window {
+  width: 45%;
+  height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.popup_head {
+  display: flex;
+  width: 98%;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.poup_title {
+  position: relative;
+  left: 50%;
+  font-size: 24px;
+}
+
+.poup_close {
+  padding: 2px 5px;
+  border-radius: 4px;
+  border: 1px solid #cac6c6;
+  cursor: pointer;
+}
+
+.button_wrapper {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+}
+
+.popup-content {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.popup_buttons {
+  margin: 0 10px;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.popup_buttons.cancel {
+  color: #fff;
+  background-color: red;
+}
+
+.popup_buttons.ok {
+  color: #fff;
+  background-color: green;
+}
+
+.popup_date {
+  display: inline-block;
+  margin: 10px 0;
+  font-size: 20px;
+}
+
+.restore_button {
+  margin-left: 10px;
+}
+
+.restore_item {
+  margin-bottom: 100px;
 }

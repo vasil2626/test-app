@@ -1,4 +1,7 @@
-const TodoList = ({
+import React from "react"
+import { Ilist } from "./model"
+
+const TodoList: React.FC<Ilist> = ({
     value,
     date,
     checked,

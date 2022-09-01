@@ -1,6 +1,8 @@
+import React from "react"
 import { useEffect } from "react"
+import { Iinput } from "./model"
 
-const Input = ({ change, value, placeHolder, isValid }) => {
+const Input: React.FC<Iinput> = ({ change, value, placeHolder, isValid }) => {
 
 
     const checkValidation = () => {
@@ -18,7 +20,7 @@ const Input = ({ change, value, placeHolder, isValid }) => {
             <input
                 type="text"
                 className="input"
-                onChange={(event) => change(event)}
+                onChange={(event): void => change(event)}
                 value={value}
                 placeholder={placeHolder}
                 style={!checkValidation() && value ? { borderColor: "red" } : { borderColor: "" }}

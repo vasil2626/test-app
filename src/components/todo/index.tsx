@@ -1,26 +1,27 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../input";
 import PopUp from "../popup";
 import Restore from "../restore/index"
 import TodoList from "../todoList";
+import { Itodo } from "./model";
 
-const Todo = () => {
+const Todo: React.FC = () => {
 
-    const [inputValue, setInputValues] = useState("")
-    const [todoList, setTodoList] = useState([])
-    const [popUp, setPopUp] = useState(false)
-    const [itemDate, setitemDate] = useState()
-    const [restoreDate, setRestoreDate] = useState([])
-    const [restorePopUp, setRestore] = useState(false)
-    const [showRestor, setShowRestor] = useState(false)
-    const [validValue, setValidValue] = useState(true)
+    const [inputValue, setInputValues] = useState<Itodo | string>()
+    const [todoList, setTodoList] = useState<Itodo | any>([])
+    const [popUp, setPopUp] = useState<Itodo | boolean>(false)
+    const [itemDate, setitemDate] = useState<Itodo | any>()
+    const [restoreDate, setRestoreDate] = useState<Itodo | any>([])
+    const [restorePopUp, setRestore] = useState<Itodo | boolean>(false)
+    const [showRestor, setShowRestor] = useState<Itodo | boolean>(false)
+    const [validValue, setValidValue] = useState<Itodo | boolean>(true)
 
-    const normalDate = (date) => {
+    const normalDate = (date: object): string => {
         return date.toLocaleString()
     }
 
-    const handleChange = (event) => {
-        const { value } = event.target
+    const handleChange = (event: React.SyntheticEvent<EventTarget>) => {
+        const { value } = event.target as HTMLInputElement
         setInputValues(value)
 
     }
@@ -40,7 +41,7 @@ const Todo = () => {
 
     }
 
-    const openPopUp = (value, id) => {
+    const openPopUp = (value: string, id: number): void => {
 
         const popUpData = { value, id }
         setPopUp(true)
@@ -48,15 +49,15 @@ const Todo = () => {
 
     }
 
-    const hamdleClose = (value) => {
+    const handleClose = (value: any): void => {
         setPopUp(value)
     }
 
-    const handleedit = (value, id) => {
+    const handleedit = (value: string, id: number): void => {
 
         const initialState = [...todoList]
 
-        const edit = initialState.filter((item) => {
+        const edit = initialState.filter((item): boolean => {
             return item.id === id
         })
 
@@ -65,50 +66,58 @@ const Todo = () => {
         setPopUp(false)
     }
 
-    const handleDelete = (id) => {
+    const handleDelete = (id: number) => {
 
-        const delTodo = todoList.find((item) => item.id === id)
+        const delTodo = todoList.find((item: any) => item.id === id)
         setRestoreDate([...restoreDate, delTodo])
-        const filteritem = todoList.filter(item => item.id !== id)
+        const filteritem = todoList.filter((item: any): boolean => item.id !== id)
 
         setTodoList(filteritem)
         setShowRestor(true)
     }
 
-    const handleRestored = (data) => {
+    const handleRestored = (data: object): void => {
+
         setTodoList([...todoList, { ...data }])
         setRestore(false)
+
     }
 
-    const deleteRestore = (el) => {
-        const deletRestoreDate = restoreDate.filter(item => {
+    const deleteRestore = (el: object | any) => {
+
+        const deletRestoreDate = restoreDate.filter((item: any): any => {
             return item.id !== el.id
+
         })
 
         setRestoreDate([...deletRestoreDate])
 
         if (!deletRestoreDate.length) {
+
             setRestore(false)
             setShowRestor(false)
 
         }
     }
 
-    const handleChack = (id) => {
-        const newTodo = todoList.map(item => item.id === id ? { ...item, checked: !item.checked } : { ...item })
+    const handleChack = (id: number): void => {
+        const newTodo = todoList.map((item: any): object => item.id === id ?
+            { ...item, checked: !item.checked } : { ...item })
         setTodoList(newTodo)
     }
 
-    const handleKeyDown = (event) => {
 
-        event.key === "Enter" && handleClick()
-    }
 
-    const handleValidValue = (value) => {
+    const handleValidValue = (value: boolean) => {
         setValidValue(value)
     }
 
     useEffect(() => {
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+
+            event.key === "Enter" && handleClick()
+        };
 
         window.addEventListener("keydown", handleKeyDown)
 
@@ -125,9 +134,7 @@ const Todo = () => {
                     change={handleChange}
                     value={inputValue}
                     placeHolder="Add task"
-                    isValid={(value) => handleValidValue(value)}
-
-
+                    isValid={(value: boolean) => handleValidValue(value)}
                 />
                 <button
                     className="Add_button"
@@ -137,7 +144,7 @@ const Todo = () => {
                 </button>
                 {
                     showRestor &&
-                    <button className="restore_button" onClick={() => {
+                    <button className="restore_button" onClick={(): void => {
                         setRestore(true)
                     }}>restore</button>
 
@@ -148,7 +155,7 @@ const Todo = () => {
                 !!todoList.length &&
                 <div className="todo_wrapper">
                     {
-                        todoList?.map(({ id, value, date, checked }) => {
+                        todoList?.map(({ id, value, date, checked }: any) => {
                             return (
                                 <div className="todo_item" key={id} >
                                     <TodoList
@@ -156,9 +163,9 @@ const Todo = () => {
                                         date={date}
                                         checked={checked}
                                         id={id}
-                                        deletItem={(id) => handleDelete(id)}
-                                        checkItem={(id) => handleChack(id)}
-                                        isOPen={(value, id) => openPopUp(value, id)}
+                                        deletItem={(id: number) => handleDelete(id)}
+                                        checkItem={(id: number) => handleChack(id)}
+                                        isOPen={(value: string, id: number) => openPopUp(value, id)}
                                     />
                                 </div>
                             );
@@ -170,9 +177,9 @@ const Todo = () => {
             {
                 popUp &&
                 <PopUp
-                    close={(value) => hamdleClose(value)}
+                    close={(value: string): void => handleClose(value)}
                     data={itemDate}
-                    edidValue={(value, id) => handleedit(value, id)}
+                    edidValue={(value: string, id: number): void => handleedit(value, id)}
 
                 />
             }
@@ -180,10 +187,9 @@ const Todo = () => {
                 restorePopUp &&
                 <Restore
                     datas={restoreDate}
-                    close={(value) => setRestore(value)}
-                    isRestored={(data) => handleRestored(data)}
-                    deleteRestore={(el) => deleteRestore(el)}
-
+                    close={(value: boolean): void => setRestore(value)}
+                    isRestored={(data: object): void => handleRestored(data)}
+                    deleteRestore={(el: object): void => deleteRestore(el)}
                 />
             }
 

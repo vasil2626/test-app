@@ -1,18 +1,20 @@
+import React from "react"
 import { useState } from "react"
 import Input from "../input"
+import { Ipopup } from "./model"
 
-const PopUp = ({ close, data, edidValue }) => {
+const PopUp: React.FC<Ipopup> = ({ close, data, edidValue }) => {
 
-    const [value, setValue] = useState(data.value)
+    const [value, setValue] = useState<string>(data.value)
 
-    let validValue = false
+    let validValue: boolean = false
 
     const handleClose = () => {
         close(false)
     }
 
-    const handleChange = (event) => {
-        const { value } = event.target
+    const handleChange = (event: React.SyntheticEvent<EventTarget>): void => {
+        const { value } = event.target as HTMLInputElement
         setValue(value)
     }
 
@@ -20,7 +22,7 @@ const PopUp = ({ close, data, edidValue }) => {
         edidValue(value, data.id)
     }
 
-    const handleValidValue = (value) => {
+    const handleValidValue = (value: boolean) => {
         validValue = value
     }
 
@@ -38,8 +40,8 @@ const PopUp = ({ close, data, edidValue }) => {
                     <Input
                         value={value}
                         placeHolder="Edit task"
-                        change={(e) => handleChange(e)}
-                        isValid={(value) => handleValidValue(value)}
+                        change={(e: React.SyntheticEvent<EventTarget>) => handleChange(e)}
+                        isValid={(value: boolean) => handleValidValue(value)}
 
                     />
                     <div className="button_wrapper">

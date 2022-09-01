@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Irestore } from "./model"
 
-const Restore = ({ datas, close, isRestored, deleteRestore }) => {
+const Restore: React.FC<Irestore> = ({ datas, close, isRestored, deleteRestore }) => {
 
-    const [data, setData] = useState()
+    const [data, setData] = useState<any>()
 
-    const handleClose = () => {
+    const handleClose = (): void => {
         close(false)
     }
 
-    const handleDelete = (el) => {
+    const handleDelete = (el: boolean) => {
 
         deleteRestore(el)
 
     }
 
-    const handleRestore = (data) => {
+    const handleRestore = (data: object): void => {
         isRestored(data)
         deleteRestore(data)
     }
@@ -33,7 +34,7 @@ const Restore = ({ datas, close, isRestored, deleteRestore }) => {
                 <div className="popup-content">
                     <div className="restore_item">
                         {
-                            data?.map((item, ind) => {
+                            data?.map((item: any, ind: number) => {
                                 return (
                                     <ul className="lists" key={ind}>
                                         <li className="list-items">

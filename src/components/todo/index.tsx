@@ -107,7 +107,6 @@ const Todo: React.FC = () => {
     }
 
 
-
     const handleValidValue = (value: boolean) => {
         setValidValue(value)
     }
@@ -128,6 +127,7 @@ const Todo: React.FC = () => {
     })
 
     return (
+
         <div className="Todo">
             <div className="input_wrapper">
                 <Input

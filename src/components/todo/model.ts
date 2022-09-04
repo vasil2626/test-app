@@ -1,13 +1,15 @@
 export interface Itodo {
 
-    inputValue: string | any,
-    todoList: object,
-    popUp: boolean,
-    itemDate: object,
-    restoreDate: [],
-    restorePopUp: boolean,
-    showRestor: boolean,
-    validValue: boolean
+    id?: number,
+    date?: string,
+    popUp?: boolean,
+    value?: string,
+    checked?: boolean,
+}
 
-
+export interface Irestore {
+    checked?: boolean,
+    date?: string,
+    id?: number,
+    value?: string
 }

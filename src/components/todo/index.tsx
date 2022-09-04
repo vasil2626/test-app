@@ -3,18 +3,29 @@ import Input from "../input";
 import PopUp from "../popup";
 import Restore from "../restore/index"
 import TodoList from "../todoList";
-import { Itodo } from "./model";
+import { Itodo, Irestore } from "./model";
+import {
+    addTodo,
+    ediidTodo,
+    deleteTodo,
+    restoreTodo,
+    checkTodo
+} from "../../redux/todoSlicce";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
 const Todo: React.FC = () => {
 
-    const [inputValue, setInputValues] = useState<Itodo | string>()
-    const [todoList, setTodoList] = useState<Itodo | any>([])
-    const [popUp, setPopUp] = useState<Itodo | boolean>(false)
-    const [itemDate, setitemDate] = useState<Itodo | any>()
-    const [restoreDate, setRestoreDate] = useState<Itodo | any>([])
-    const [restorePopUp, setRestore] = useState<Itodo | boolean>(false)
-    const [showRestor, setShowRestor] = useState<Itodo | boolean>(false)
-    const [validValue, setValidValue] = useState<Itodo | boolean>(true)
+    const [inputValue, setInputValues] = useState<string>("")
+    const [popUp, setPopUp] = useState<boolean>(false)
+    const [itemDate, setitemDate] = useState<{}>()
+    const [restoreDate, setRestoreDate] = useState<Irestore[] | any>([])
+    const [restorePopUp, setRestore] = useState<boolean>(false)
+    const [showRestor, setShowRestor] = useState<boolean>(false)
+    const [validValue, setValidValue] = useState<boolean>(true)
+
+    const dispatch = useAppDispatch()
+
+    const todos = useAppSelector(state => state.todos)
 
     const normalDate = (date: object): string => {
         return date.toLocaleString()
@@ -29,12 +40,13 @@ const Todo: React.FC = () => {
     const handleClick = () => {
 
         if (!!inputValue && validValue) {
-            setTodoList([...todoList, {
+
+            dispatch(addTodo({
                 id: new Date().getMilliseconds(),
                 date: normalDate(new Date()),
                 value: inputValue,
                 checked: false,
-            }])
+            }))
         }
 
         setInputValues("")
@@ -49,43 +61,47 @@ const Todo: React.FC = () => {
 
     }
 
-    const handleClose = (value: any): void => {
+    const handleClose = (value: boolean): void => {
         setPopUp(value)
     }
 
-    const handleedit = (value: string, id: number): void => {
+    const handleEdit = (value: string, id: number): void => {
 
-        const initialState = [...todoList]
+        const params = { value, id }
 
-        const edit = initialState.filter((item): boolean => {
-            return item.id === id
-        })
-
-        edit[0].value = value
+        dispatch(ediidTodo(params))
 
         setPopUp(false)
     }
 
     const handleDelete = (id: number) => {
 
-        const delTodo = todoList.find((item: any) => item.id === id)
-        setRestoreDate([...restoreDate, delTodo])
-        const filteritem = todoList.filter((item: any): boolean => item.id !== id)
+        const delTodo = todos.list.find((item): boolean => item.id === id)
 
-        setTodoList(filteritem)
+        const newTodo = todos.list.filter((item) => {
+            return item.id !== id
+        })
+
+        dispatch(deleteTodo(newTodo))
+
+        setRestoreDate([...restoreDate, delTodo])
+
         setShowRestor(true)
     }
 
     const handleRestored = (data: object): void => {
 
-        setTodoList([...todoList, { ...data }])
+
+        dispatch(restoreTodo(data))
+
         setRestore(false)
 
     }
 
     const deleteRestore = (el: object | any) => {
 
-        const deletRestoreDate = restoreDate.filter((item: any): any => {
+        const deletRestoreDate = restoreDate.filter((item: object | any) => {
+
             return item.id !== el.id
 
         })
@@ -100,12 +116,13 @@ const Todo: React.FC = () => {
         }
     }
 
-    const handleChack = (id: number): void => {
-        const newTodo = todoList.map((item: any): object => item.id === id ?
-            { ...item, checked: !item.checked } : { ...item })
-        setTodoList(newTodo)
-    }
+    const handleChack = (id: number) => {
 
+        const newTodo = todos.list.map((item: any): object => item.id === id ?
+            { ...item, checked: !item.checked } : { ...item })
+
+        dispatch(checkTodo(newTodo))
+    }
 
     const handleValidValue = (value: boolean) => {
         setValidValue(value)
@@ -152,24 +169,21 @@ const Todo: React.FC = () => {
 
             </div>
             {
-                !!todoList.length &&
+                !!todos.list.length &&
                 <div className="todo_wrapper">
                     {
-                        todoList?.map(({ id, value, date, checked }: any) => {
-                            return (
-                                <div className="todo_item" key={id} >
-                                    <TodoList
-                                        value={value}
-                                        date={date}
-                                        checked={checked}
-                                        id={id}
-                                        deletItem={(id: number) => handleDelete(id)}
-                                        checkItem={(id: number) => handleChack(id)}
-                                        isOPen={(value: string, id: number) => openPopUp(value, id)}
-                                    />
-                                </div>
-                            );
-                        })
+                        todos.list?.map(({ id, value, date, checked }: any): JSX.Element => (
+                            <div className="todo_item" key={id}>
+                                <TodoList
+                                    value={value}
+                                    date={date}
+                                    checked={checked}
+                                    id={id}
+                                    deletItem={(id: number) => handleDelete(id)}
+                                    checkItem={(id: number) => handleChack(id)}
+                                    isOPen={(value: string, id: number) => openPopUp(value, id)} />
+                            </div>
+                        ))
                     }
                 </div>
             }
@@ -177,9 +191,9 @@ const Todo: React.FC = () => {
             {
                 popUp &&
                 <PopUp
-                    close={(value: string): void => handleClose(value)}
+                    close={(value: boolean) => handleClose(value)}
                     data={itemDate}
-                    edidValue={(value: string, id: number): void => handleedit(value, id)}
+                    edidValue={(value: string, id: number): void => handleEdit(value, id)}
 
                 />
             }
@@ -187,9 +201,9 @@ const Todo: React.FC = () => {
                 restorePopUp &&
                 <Restore
                     datas={restoreDate}
-                    close={(value: boolean): void => setRestore(value)}
-                    isRestored={(data: object): void => handleRestored(data)}
-                    deleteRestore={(el: object): void => deleteRestore(el)}
+                    close={(value: boolean) => setRestore(value)}
+                    isRestored={(data: object) => handleRestored(data)}
+                    deleteRestore={(el: object) => deleteRestore(el)}
                 />
             }
 

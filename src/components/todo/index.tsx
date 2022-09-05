@@ -3,7 +3,7 @@ import Input from "../input";
 import PopUp from "../popup";
 import Restore from "../restore/index"
 import TodoList from "../todoList";
-import { Itodo, Irestore } from "./model";
+import { Irestore } from "./model";
 import {
     addTodo,
     ediidTodo,

@@ -34,9 +34,6 @@ const todoSlice = createSlice({
 
             const { payload } = action
 
-            console.log(typeof payload);
-
-
             state.list = payload
 
         },

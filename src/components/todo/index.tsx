@@ -91,7 +91,6 @@ const Todo: React.FC = () => {
 
     const handleRestored = (data: object): void => {
 
-
         dispatch(restoreTodo(data))
 
         setRestore(false)

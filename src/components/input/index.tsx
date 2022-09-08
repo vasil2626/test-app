@@ -4,7 +4,6 @@ import { Iinput } from "./model"
 
 const Input: React.FC<Iinput> = ({ change, value, placeHolder, isValid }) => {
 
-
     const checkValidation = () => {
 
         const regexp = /^[^\s]+(\s+[^\s]+)*$/

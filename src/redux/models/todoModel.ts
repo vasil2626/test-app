@@ -6,5 +6,7 @@ interface Itodo {
 }
 
 export interface ItodoState {
-    list: Itodo[]
+    list: Itodo[],
+    loading: boolean,
+    error: string
 }

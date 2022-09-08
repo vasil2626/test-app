@@ -3,7 +3,7 @@ import { Irestore } from "./model"
 
 const Restore: React.FC<Irestore> = ({ datas, close, isRestored, deleteRestore }) => {
 
-    const [data, setData] = useState<any>()
+    const [data, setData] = useState<object[]>()
 
     const handleClose = (): void => {
         close(false)
@@ -43,8 +43,6 @@ const Restore: React.FC<Irestore> = ({ datas, close, isRestored, deleteRestore }
                                             <button onClick={() => handleDelete(item)}>delete</button>
                                             <button onClick={() => handleRestore(item)}>restore</button>
                                         </li>
-
-
                                     </ul>
                                 )
                             })

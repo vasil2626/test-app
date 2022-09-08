@@ -139,3 +139,73 @@ li {
 .restore_item {
   margin-bottom: 100px;
 }
+
+
+/* -------------- */
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cards {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.list {
+  width: 90%;
+  margin: 0 auto;
+
+}
+
+.list_items {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.list_items_card {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #b7b4b4;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.list_item_userId {
+  font-size: 14px;
+  color: #676363;
+  text-align: center;
+
+}
+
+.list_item_title {
+  display: inline-block;
+  font-size: 14px;
+  text-align: center;
+}
+
+.buttons_page {
+  display: flex;
+  justify-content: center;
+
+}
+
+.buttons {
+  margin-left: 5px;
+  width: 30px;
+  height: 30px;
+  background: none;
+  border: 1px solid #676363;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

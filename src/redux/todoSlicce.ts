@@ -4,7 +4,9 @@ import { ItodoState } from "./models/todoModel"
 
 
 const initialState: ItodoState = {
-    list: []
+    list: [],
+    loading: false,
+    error: ""
 }
 
 const todoSlice = createSlice({
@@ -48,8 +50,8 @@ const todoSlice = createSlice({
 
             state.list = payload
 
-
         }
+
     }
 })
 

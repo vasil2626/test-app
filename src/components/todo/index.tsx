@@ -27,6 +27,7 @@ const Todo: React.FC = () => {
 
     const todos = useAppSelector(state => state.todos)
 
+
     const normalDate = (date: object): string => {
         return date.toLocaleString()
     }
@@ -47,15 +48,16 @@ const Todo: React.FC = () => {
                 value: inputValue,
                 checked: false,
             }))
+
         }
 
         setInputValues("")
 
     }
 
-    const openPopUp = (value: string, id: number): void => {
+    const openPopUp = (value: string, id: number, date: string): void => {
 
-        const popUpData = { value, id }
+        const popUpData = { value, id, date }
         setPopUp(true)
         setitemDate(popUpData)
 
@@ -142,6 +144,7 @@ const Todo: React.FC = () => {
 
     })
 
+
     return (
 
         <div className="Todo">
@@ -180,7 +183,7 @@ const Todo: React.FC = () => {
                                     id={id}
                                     deletItem={(id: number) => handleDelete(id)}
                                     checkItem={(id: number) => handleChack(id)}
-                                    isOPen={(value: string, id: number) => openPopUp(value, id)} />
+                                    isOPen={(value: string, id: number) => openPopUp(value, id, date)} />
                             </div>
                         ))
                     }
